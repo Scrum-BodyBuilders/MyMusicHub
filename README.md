@@ -10,8 +10,7 @@ Cele:
 1.	Dostęp do listy ćwiczeń
 a.	Możliwość tworzenia własnych planów treningowych z listy dostępnych ćwiczeń
 - Możliwość zapisania danego planu
-- Wkomponowanie planu w kalendarz
-- 
+- Wkomponowanie planu w kalendarz 
 b.	Opcja skorzystania z już dostępnych planów ułożonych przez innych użytkowników
 - Możliwość ich oceny
 -Możliwość ich modyfikacji
