@@ -1,31 +1,40 @@
 import 'package:flutter/material.dart';
 import 'package:mymusichub/services/auth.dart';
+import 'package:mymusichub/shared/constants.dart';
+import 'package:mymusichub/shared/loading.dart';
 
 class Register extends StatefulWidget {
+
+  final Function toggleView;
+  Register({this.toggleView});
+
   @override
   _RegisterState createState() => _RegisterState();
 }
 
 final AuthService _auth = AuthService();
+final _formKey = GlobalKey<FormState>();
+bool loading = false;
 
 //text field state
 
 String email = '';
 String password = '';
+String error = '';
 
 class _RegisterState extends State<Register> {
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
+    return loading ? Loading() : SafeArea(
       child: Scaffold(
         appBar: AppBar(
           title: Text("Register"),
         ),
         backgroundColor: Color.fromRGBO(201, 204, 207, 1.0),
-
         body: Container(
           padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 50.0),
           child: Form(
+            key: _formKey,
               child: Column(
                 children: <Widget>[
                   SizedBox(height: 30.0),
@@ -40,13 +49,17 @@ class _RegisterState extends State<Register> {
                         fontFamily: 'BioRyhme',
                       )),
                   TextFormField(
+                    decoration: textInputDecoration.copyWith(hintText: 'Email'),
+                    validator: (val) => val.isEmpty ? 'Enter an email' : null,
                       onChanged: (val){
                         setState(() => email = val);
                       }
                   ),
                   SizedBox(height: 20.0),
                   TextFormField(
+                      decoration: textInputDecoration.copyWith(hintText: 'Password'),
                       obscureText: true,
+                      validator: (val) => val.length < 6 ? 'Enter a password 6+ chars long' : null,
                       onChanged: (val){
                         setState(() => password = val);
                       }
@@ -66,8 +79,16 @@ class _RegisterState extends State<Register> {
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(18.0),
                         ),
-                        onPressed: () async {
+                        onPressed: () async { //register !!!!
+                          if(_formKey.currentState.validate()){
+                            setState(() => loading  = true);
+                            dynamic result = await _auth .registerWithEmailAndPassword(email, password);
+                            setState(() {
+                              error = 'Could not register with those credentials';
+                              loading =false;
+                            });
 
+                          }
                         },
 
                       ),
@@ -87,16 +108,21 @@ class _RegisterState extends State<Register> {
                         ),
 
                         onPressed: () async {
-                          print(email);
-                          print(password);
+                          widget.toggleView();
                         },
 
                       ),
+
                     ],
-
-
                   ),
-
+                  SizedBox(height: 20),
+                  Text(error,
+                    style:TextStyle(
+                      color: Colors.red,
+                      fontSize: 14.0,
+                      fontFamily: 'BioRyhme',
+                    ),
+                  ),
                 ],
               )
           ),
