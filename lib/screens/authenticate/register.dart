@@ -25,38 +25,54 @@ String error = '';
 class _RegisterState extends State<Register> {
   @override
   Widget build(BuildContext context) {
-    return loading ? Loading() : SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text("Register"),
-        ),
-        backgroundColor: Color.fromRGBO(201, 204, 207, 1.0),
-        body: Container(
-          padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 50.0),
-          child: Form(
-            key: _formKey,
-              child: Column(
-                children: <Widget>[
-                  SizedBox(height: 30.0),
-                  CircleAvatar(
-                    backgroundImage: AssetImage('assets/images/logo.png'),
-                    radius: 80,
-                  ),
-                  SizedBox(height: 10.0),
-                  Text('MY MUSIC HUB',
+    return loading ? Loading() : Scaffold(
+
+      backgroundColor: Color.fromRGBO(201, 204, 207, 1.0),
+      body: Container(
+        padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 50.0),
+        child: Form(
+          key: _formKey,
+            child: Column(
+              children: <Widget>[
+                SizedBox(height: 55.0),
+                CircleAvatar(
+                  backgroundImage: AssetImage('assets/images/logo.png'),
+                  radius: 80,
+                ),
+                SizedBox(height: 10.0),
+                Expanded(
+                  flex: 10,
+                  child: Text('MY MUSIC HUB',
                       style: TextStyle(
                         fontSize: 30,
                         fontFamily: 'BioRyhme',
                       )),
-                  TextFormField(
+                ),
+                Expanded(
+                  flex: 10,
+                  child: TextFormField(
                     decoration: textInputDecoration.copyWith(hintText: 'Email'),
                     validator: (val) => val.isEmpty ? 'Enter an email' : null,
                       onChanged: (val){
                         setState(() => email = val);
                       }
                   ),
-                  SizedBox(height: 20.0),
-                  TextFormField(
+                ),
+
+                Expanded(
+                  flex: 10,
+                  child: TextFormField(
+                      decoration: textInputDecoration.copyWith(hintText: 'Username'),
+                      obscureText: true,
+                      validator: (val) => val.length < 6 ? 'Enter a password 6+ chars long' : null,
+                      onChanged: (val){
+                        setState(() => password = val);
+                      }
+                  ),
+                ),
+                Expanded(
+                  flex: 10,
+                  child: TextFormField(
                       decoration: textInputDecoration.copyWith(hintText: 'Password'),
                       obscureText: true,
                       validator: (val) => val.length < 6 ? 'Enter a password 6+ chars long' : null,
@@ -64,8 +80,11 @@ class _RegisterState extends State<Register> {
                         setState(() => password = val);
                       }
                   ),
-                  SizedBox(height: 25.0),
-                  Row(
+                ),
+                SizedBox(height: 25.0),
+                Expanded(
+                  flex: 10,
+                  child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: <Widget>[
                       RaisedButton(
@@ -115,17 +134,17 @@ class _RegisterState extends State<Register> {
 
                     ],
                   ),
-                  SizedBox(height: 20),
-                  Text(error,
-                    style:TextStyle(
-                      color: Colors.red,
-                      fontSize: 14.0,
-                      fontFamily: 'BioRyhme',
-                    ),
+                ),
+                SizedBox(height: 20),
+                Text(error,
+                  style:TextStyle(
+                    color: Colors.red,
+                    fontSize: 14.0,
+                    fontFamily: 'BioRyhme',
                   ),
-                ],
-              )
-          ),
+                ),
+              ],
+            )
         ),
       ),
     );

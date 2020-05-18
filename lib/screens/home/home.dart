@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mymusichub/screens/authenticate/authenticate.dart';
 import 'package:mymusichub/services/auth.dart';
 
 class Home extends StatelessWidget {
