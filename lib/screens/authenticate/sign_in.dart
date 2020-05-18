@@ -27,6 +27,7 @@ class _SignInState extends State<SignIn> {
     return loading
         ? Loading()
         : Scaffold(
+      resizeToAvoidBottomPadding: false,
 //        appBar: AppBar(
 //          title: Text("Sign In"),
 //        ),
